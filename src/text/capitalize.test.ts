@@ -35,9 +35,13 @@ describe('capitalize', () => {
   });
 
   describe('apostrophes', () => {
-    it('does not treat an apostrophe as a part boundary', () => {
-      // Fantasy names like "Ka'ra" keep the letter after the apostrophe lowercase.
-      expect(capitalize("ka'RA")).toBe("Ka'ra");
+    it('capitalizes the letter after an apostrophe', () => {
+      expect(capitalize("o'brien")).toBe("O'Brien");
+      expect(capitalize("ka'RA")).toBe("Ka'Ra");
+    });
+
+    it('handles apostrophes and hyphens together', () => {
+      expect(capitalize("o'neil-d'arcy")).toBe("O'Neil-D'Arcy");
     });
 
     it('capitalizes the first letter after a leading apostrophe', () => {
