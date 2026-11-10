@@ -50,6 +50,8 @@ npm run test:e2e     # Playwright end-to-end tests (added in #3)
 7. **Never push to `main`, never merge your own PR, never force-push a shared branch.** Jameson reviews and merges.
 8. **One issue per PR.** If you find other problems, note them in the PR or draft a new issue; don't fix them in passing.
 
+**Shortcut:** in Claude Code, `/work-issue <number>` (defined in `.claude/commands/work-issue.md`) starts this flow for an issue. It reads the issue and proposes a plan, then waits for approval before branching and implementing.
+
 ## Testing
 
 - **Unit tests (Vitest):** all logic, especially name generation. Keep generation logic in pure functions, separate from the DOM, so it is easy to test.
