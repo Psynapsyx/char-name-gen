@@ -1,0 +1,18 @@
+{
+  "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
+  // Fail CI on moderate, high or critical advisories.
+  "moderate": true,
+  // Each entry allows ONE advisory through ONE exact dependency path.
+  // The same advisory arriving via any other package still fails CI.
+  //
+  // GHSA-g3hv-75wg-m249 (minimatch ReDoS) via typescript-eslint.
+  // Reason: dev-only lint tooling; fixed upstream, expected in typescript-eslint 8.72.3.
+  // Removed by: https://github.com/Psynapsyx/char-name-gen/issues/24
+  "allowlist": [
+    "GHSA-g3hv-75wg-m249|@typescript-eslint/eslint-plugin>@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch",
+    "GHSA-g3hv-75wg-m249|@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch",
+    "GHSA-g3hv-75wg-m249|@typescript-eslint/typescript-estree>minimatch>",
+    "GHSA-g3hv-75wg-m249|@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch>",
+    "GHSA-g3hv-75wg-m249|typescript-eslint>@typescript-eslint/parser>@typescript-eslint/typescript-estree>minimatch",
+  ],
+}
