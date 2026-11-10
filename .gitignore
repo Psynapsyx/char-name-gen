@@ -150,3 +150,9 @@ vite.config.ts.timestamp-*
 
 # Claude Code personal settings (shared .claude/ files stay committed)
 .claude/settings.local.json
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
