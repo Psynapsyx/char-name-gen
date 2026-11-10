@@ -1,8 +1,21 @@
 /**
- * Upper-cases the first letter of a word and lower-cases the rest,
- * e.g. "tHORIN" -> "Thorin". Returns an empty string unchanged.
+ * Matches the first letter of the word and the first letter after each hyphen,
+ * skipping any non-letters in between (quotes, parentheses, apostrophes).
+ * `\p{L}` is any Unicode letter, so accented letters like "é" and "ñ" count.
+ */
+const PART_START = /(^|-)(\P{L}*?)(\p{L})/gu;
+
+/**
+ * Lower-cases a word, then upper-cases the first letter of each
+ * hyphen-separated part, e.g. "jean-LUC" -> "Jean-Luc", "(éowyn)" -> "(Éowyn)".
+ * Apostrophes are not part boundaries: "ka'RA" -> "Ka'ra".
  */
 export function capitalize(word: string): string {
-  if (word === '') return word;
-  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  return word
+    .toLowerCase()
+    .replace(
+      PART_START,
+      (_match, boundary: string, prefix: string, letter: string) =>
+        boundary + prefix + letter.toUpperCase(),
+    );
 }
