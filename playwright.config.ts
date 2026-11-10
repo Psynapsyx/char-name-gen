@@ -17,6 +17,8 @@ export default defineConfig({
   use: {
     baseURL,
     trace: 'on-first-retry',
+    // Attach a screenshot to the HTML report when a test fails.
+    screenshot: 'only-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
