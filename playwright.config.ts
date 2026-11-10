@@ -16,9 +16,10 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL,
-    trace: 'on-first-retry',
-    // Attach a screenshot to the HTML report when a test fails.
+    trace: 'retain-on-failure',
+    // On failure, attach a screenshot, video and trace to the HTML report.
     screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
