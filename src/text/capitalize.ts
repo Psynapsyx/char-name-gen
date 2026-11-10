@@ -1,14 +1,15 @@
 /**
- * Matches the first letter of the word and the first letter after each hyphen or apostrophe,
- * skipping any non-letters in between (quotes, parentheses).
+ * Matches the first letter of the text and the first letter after each
+ * whitespace, hyphen or apostrophe (straight ' or curly ’), skipping any
+ * non-letters in between (quotes, parentheses).
  * `\p{L}` is any Unicode letter, so accented letters like "é" and "ñ" count.
  */
-const PART_START = /(^|[-'])(\P{L}*?)(\p{L})/gu;
+const PART_START = /(^|[-'’\s])(\P{L}*?)(\p{L})/gu;
 
 /**
- * Lower-cases a word, then upper-cases the first letter of each
- * part separated by a hyphen or apostrophe,
- * e.g. "jean-LUC" -> "Jean-Luc", "o'brien" -> "O'Brien", "(éowyn)" -> "(Éowyn)".
+ * Lower-cases a name, then upper-cases the first letter of each part
+ * separated by whitespace, a hyphen or an apostrophe, e.g.
+ * "jean-LUC" -> "Jean-Luc", "o'brien" -> "O'Brien", "(the grey)" -> "(The Grey)".
  */
 export function capitalize(word: string): string {
   return word

@@ -34,10 +34,28 @@ describe('capitalize', () => {
     });
   });
 
+  describe('multiple words', () => {
+    it('capitalizes every space-separated word', () => {
+      expect(capitalize('gandalf the grey')).toBe('Gandalf The Grey');
+    });
+
+    it('capitalizes words in an epithet after a name', () => {
+      expect(capitalize('thorin (oakenshield the bold)')).toBe('Thorin (Oakenshield The Bold)');
+    });
+
+    it('keeps the original whitespace', () => {
+      expect(capitalize(' ana  maria	lópez ')).toBe(' Ana  Maria	López ');
+    });
+  });
+
   describe('apostrophes', () => {
     it('capitalizes the letter after an apostrophe', () => {
       expect(capitalize("o'brien")).toBe("O'Brien");
       expect(capitalize("ka'RA")).toBe("Ka'Ra");
+    });
+
+    it('capitalizes the letter after a curly apostrophe', () => {
+      expect(capitalize('o’brien')).toBe('O’Brien');
     });
 
     it('handles apostrophes and hyphens together', () => {
@@ -52,10 +70,11 @@ describe('capitalize', () => {
   describe('punctuation around the word', () => {
     it('capitalizes the first letter inside double quotes', () => {
       expect(capitalize('"bOLT"')).toBe('"Bolt"');
+      expect(capitalize('"the bold"')).toBe('"The Bold"');
     });
 
     it('capitalizes the first letter inside parentheses', () => {
-      expect(capitalize('(the grey)')).toBe('(The grey)');
+      expect(capitalize('(the grey)')).toBe('(The Grey)');
     });
 
     it('leaves a word with no letters unchanged', () => {
