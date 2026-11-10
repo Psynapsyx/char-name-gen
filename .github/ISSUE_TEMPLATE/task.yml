@@ -1,0 +1,26 @@
+name: Task
+description: Technical or housekeeping work that isn't a user-facing feature (setup, refactoring, CI, docs).
+title: "[Task] "
+labels: ["type:task"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs doing
+      description: Describe the work and why it's needed.
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: A checklist of concrete, checkable outcomes.
+      placeholder: |
+        - [ ] `npm test` runs Vitest and passes
+        - [ ] CI runs the tests on every pull request
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes

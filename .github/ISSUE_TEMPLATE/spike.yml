@@ -1,0 +1,38 @@
+name: Spike
+description: Time-boxed research to answer a question before committing to an approach.
+title: "[Spike] "
+labels: ["type:spike"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question to answer
+      placeholder: Which name-generation approach gives the most believable fantasy names - syllable tables or Markov chains?
+    validations:
+      required: true
+  - type: dropdown
+    id: timebox
+    attributes:
+      label: Time box
+      options:
+        - 1 hour
+        - Half a day
+        - 1 day
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Expected output
+      description: What the spike should produce. Usually a short write-up as an issue comment with a recommendation, and follow-up stories.
+      value: |
+        - [ ] Findings summarized in a comment on this issue
+        - [ ] Recommendation made
+        - [ ] Follow-up issues created
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Starting points
+      description: Links, ideas, constraints.
