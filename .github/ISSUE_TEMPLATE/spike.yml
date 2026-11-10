@@ -1,7 +1,7 @@
 name: Spike
 description: Time-boxed research to answer a question before committing to an approach.
-title: "[Spike] "
-labels: ["type:spike"]
+title: '[Spike] '
+labels: ['type:spike']
 body:
   - type: textarea
     id: question

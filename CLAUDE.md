@@ -12,15 +12,15 @@ Instructions for AI agents (Claude Code and others) working in this repo. Read t
 
 ## Tech stack (planned — scaffolded in Sprint 1)
 
-| Layer | Choice |
-| --- | --- |
-| Language | TypeScript (strict mode) |
-| Build / dev server | Vite |
-| Unit tests | Vitest |
-| End-to-end tests | Playwright |
-| Lint / format | ESLint + Prettier |
-| CI | GitHub Actions |
-| Hosting | GitHub Pages |
+| Layer              | Choice                   |
+| ------------------ | ------------------------ |
+| Language           | TypeScript (strict mode) |
+| Build / dev server | Vite                     |
+| Unit tests         | Vitest                   |
+| End-to-end tests   | Playwright               |
+| Lint / format      | ESLint + Prettier        |
+| CI                 | GitHub Actions           |
+| Hosting            | GitHub Pages             |
 
 Until the scaffold exists, there is no `package.json`. Do not add frameworks (React, etc.) or extra dependencies without an issue that approves them.
 

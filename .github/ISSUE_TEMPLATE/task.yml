@@ -1,7 +1,7 @@
 name: Task
 description: Technical or housekeeping work that isn't a user-facing feature (setup, refactoring, CI, docs).
-title: "[Task] "
-labels: ["type:task"]
+title: '[Task] '
+labels: ['type:task']
 body:
   - type: textarea
     id: description

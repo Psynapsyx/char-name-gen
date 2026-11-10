@@ -1,7 +1,7 @@
 name: Story
 description: A user-facing feature or change, written from the user's point of view.
-title: "[Story] "
-labels: ["type:story"]
+title: '[Story] '
+labels: ['type:story']
 body:
   - type: markdown
     attributes:
