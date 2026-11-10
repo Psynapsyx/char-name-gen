@@ -36,6 +36,7 @@ npm run format       # Prettier, write changes
 npm run format:check # Prettier, check only
 npm test             # Vitest unit tests (added in #2)
 npm run test:e2e     # Playwright end-to-end tests (added in #3)
+npm run audit        # audit-ci dependency audit, allowlist in audit-ci.jsonc (added in #4)
 ```
 
 ## How work flows

@@ -32,8 +32,15 @@ Then open the URL Vite prints (usually http://localhost:5173).
 | `npm run format:check` | Check formatting without changing files                     |
 | `npm test`             | Run unit tests with Vitest                                  |
 | `npm run test:e2e`     | Build, serve and run end-to-end tests with Playwright       |
+| `npm run audit`        | Fail on moderate-or-worse vulnerabilities (via `audit-ci`)  |
 
 Before the first end-to-end run, install the Playwright browser once with `npx playwright install chromium`. After a run, open the HTML report with `npx playwright show-report`.
+
+## Continuous integration
+
+Every pull request and every push to `main` runs [.github/workflows/ci.yml](.github/workflows/ci.yml): dependency audit, lint, format check, unit tests, build and end-to-end tests. If the end-to-end tests fail, the Playwright HTML report is uploaded as a workflow artifact.
+
+The dependency audit uses [audit-ci](https://github.com/IBM/audit-ci) with [audit-ci.jsonc](audit-ci.jsonc). An accepted advisory is allowlisted only for an exact dependency path, so the same advisory through another package still fails. Every entry must give a reason and link the issue that will remove it.
 
 ## License
 
