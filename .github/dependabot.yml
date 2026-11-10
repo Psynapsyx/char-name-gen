@@ -1,0 +1,32 @@
+# Dependabot version updates. See #11.
+# Nothing auto-merges: every PR goes through normal review.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      # TypeScript and the lint packages have peer-dependency ties
+      # (typescript-eslint <-> typescript, @eslint/js <-> eslint),
+      # so they must move together in one PR.
+      lint-tooling:
+        patterns:
+          - eslint
+          - '@eslint/js'
+          - eslint-config-prettier
+          - typescript
+          - typescript-eslint
+      # Everything else (vite, prettier, ...) in one weekly PR.
+      dev-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
