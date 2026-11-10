@@ -26,15 +26,16 @@ Until the scaffold exists, there is no `package.json`. Do not add frameworks (Re
 
 ## Commands
 
-Fill in or correct these when the scaffold lands.
-
 ```
 npm install          # install dependencies
 npm run dev          # local dev server
-npm run lint         # ESLint
-npm test             # Vitest unit tests
-npm run test:e2e     # Playwright end-to-end tests
-npm run build        # production build
+npm run build        # type-check (tsc) + production build to dist/
+npm run preview      # serve the production build
+npm run lint         # ESLint, zero warnings allowed
+npm run format       # Prettier, write changes
+npm run format:check # Prettier, check only
+npm test             # Vitest unit tests (added in #2)
+npm run test:e2e     # Playwright end-to-end tests (added in #3)
 ```
 
 ## How work flows
