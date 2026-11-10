@@ -30,8 +30,10 @@ Then open the URL Vite prints (usually http://localhost:5173).
 | `npm run lint`         | Run ESLint; fails on any error or warning                   |
 | `npm run format`       | Format files with Prettier                                  |
 | `npm run format:check` | Check formatting without changing files                     |
+| `npm test`             | Run unit tests with Vitest                                  |
+| `npm run test:e2e`     | Build, serve and run end-to-end tests with Playwright       |
 
-Unit tests (Vitest) and end-to-end tests (Playwright) will be added in [#2](https://github.com/Psynapsyx/char-name-gen/issues/2) and [#3](https://github.com/Psynapsyx/char-name-gen/issues/3).
+Before the first end-to-end run, install the Playwright browser once with `npx playwright install chromium`. After a run, open the HTML report with `npx playwright show-report`.
 
 ## License
 
