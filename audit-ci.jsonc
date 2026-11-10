@@ -9,8 +9,10 @@
   // Reason: dev-only lint tooling; fixed upstream, expected in typescript-eslint 8.72.3.
   // Removed by: https://github.com/Psynapsyx/char-name-gen/issues/24
   "allowlist": [
-    "GHSA-g3hv-75wg-m249|@typescript-eslint/eslint-plugin>@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch",
-    "GHSA-g3hv-75wg-m249|@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch",
+    // Paths exactly as audit-ci reports them after a clean `npm ci`. The
+    // type-utils path appears with and without a trailing ">" between runs.
+    "GHSA-g3hv-75wg-m249|@typescript-eslint/eslint-plugin>@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch",
+    "GHSA-g3hv-75wg-m249|@typescript-eslint/eslint-plugin>@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch>",
     "GHSA-g3hv-75wg-m249|@typescript-eslint/typescript-estree>minimatch>",
     "GHSA-g3hv-75wg-m249|@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch>",
     "GHSA-g3hv-75wg-m249|typescript-eslint>@typescript-eslint/parser>@typescript-eslint/typescript-estree>minimatch",
