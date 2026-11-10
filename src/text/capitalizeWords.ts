@@ -11,7 +11,7 @@ const PART_START = /(^|[-'’\s])(\P{L}*?)(\p{L})/gu;
  * separated by whitespace, a hyphen or an apostrophe, e.g.
  * "jean-LUC" -> "Jean-Luc", "o'brien" -> "O'Brien", "(the grey)" -> "(The Grey)".
  */
-export function capitalize(word: string): string {
+export function capitalizeWords(word: string): string {
   return word
     .toLowerCase()
     .replace(
