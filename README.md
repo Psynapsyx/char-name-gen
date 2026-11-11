@@ -42,6 +42,8 @@ Every pull request and every push to `main` runs [.github/workflows/ci.yml](.git
 
 The dependency audit uses [audit-ci](https://github.com/IBM/audit-ci) with [audit-ci.jsonc](audit-ci.jsonc). An accepted advisory is allowlisted only for an exact dependency path, so the same advisory through another package still fails. Every entry must give a reason and link the issue that will remove it.
 
+When an issue is closed as completed, [.github/workflows/issue-checklist.yml](.github/workflows/issue-checklist.yml) checks its **Done when** or **Acceptance criteria** section. If any boxes there are still unticked, it reopens the issue and comments with a list of them, and the board moves the issue to **In review** rather than **Done**. To get past it, tick the boxes and close the issue again, remove items that are no longer needed, or close the issue as "not planned". The checkbox logic is in [scripts/issue-checklist/](scripts/issue-checklist/).
+
 ## License
 
 See [LICENSE](LICENSE).

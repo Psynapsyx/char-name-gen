@@ -1,0 +1,53 @@
+name: Issue checklist
+
+# When an issue is closed as completed (for example by a merged PR that says
+# "Closes #N") while some acceptance criteria are still unticked, reopen it
+# and list the open items. The project board's "Item reopened" workflow then
+# moves it from Done to In review.
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  reopen-if-unticked:
+    name: Reopen if acceptance criteria are unticked
+    # "not planned" and "duplicate" closes are left alone on purpose.
+    if: github.event.issue.state_reason == 'completed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # github-script v8 runs on Node 24, which imports .ts files directly.
+      # The issue body is read from the event payload, never interpolated
+      # into the script, so its contents can't inject code.
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const { findUncheckedCriteria, formatReopenComment } = await import(
+              `${process.env.GITHUB_WORKSPACE}/scripts/issue-checklist/uncheckedCriteria.ts`
+            );
+            const issue = context.payload.issue;
+            const unchecked = findUncheckedCriteria(issue.body ?? '');
+
+            if (unchecked.length === 0) {
+              core.info(`#${issue.number}: all acceptance criteria ticked.`);
+              return;
+            }
+
+            core.notice(`#${issue.number}: reopening, ${unchecked.length} unticked.`);
+            await github.rest.issues.update({
+              ...context.repo,
+              issue_number: issue.number,
+              state: 'open',
+            });
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issue.number,
+              body: formatReopenComment(unchecked),
+            });
