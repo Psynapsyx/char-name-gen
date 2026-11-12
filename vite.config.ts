@@ -3,6 +3,10 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  // GitHub Pages serves the site from https://<user>.github.io/char-name-gen/,
+  // so asset URLs need this prefix. It applies to dev and preview too, so every
+  // environment serves the app at the same path.
+  base: '/char-name-gen/',
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
