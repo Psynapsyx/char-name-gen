@@ -1,0 +1,42 @@
+name: PR title
+
+# PRs are squash-merged with the PR title as the commit title, so the title is
+# what lands on main. This check fails unless the title is a Conventional
+# Commit using a type allowed by CLAUDE.md. The `edited` event means fixing
+# the title re-runs the check without a new push.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  conventional-title:
+    name: Conventional Commit title
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # github-script v8 runs on Node 24, which imports .ts files directly.
+      # The title is read from the event payload, never interpolated into the
+      # script, so its contents can't inject code.
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const { checkPrTitle, formatFailureMessage } = await import(
+              `${process.env.GITHUB_WORKSPACE}/scripts/pr-title/conventionalTitle.ts`
+            );
+            const title = context.payload.pull_request.title;
+            const result = checkPrTitle(title);
+
+            if (result.ok) {
+              core.info(`PR title is a Conventional Commit: "${title}"`);
+              return;
+            }
+
+            const message = formatFailureMessage(title, result.problems);
+            await core.summary.addRaw(message, true).write();
+            core.setFailed(message);
