@@ -47,7 +47,7 @@ npm run audit        # audit-ci dependency audit, allowlist in audit-ci.jsonc (a
    - `feat/12-dwarf-names`, `fix/31-empty-list-crash`, `chore/4-setup-vitest`, `docs/7-readme`, `spike/9-markov-names`
 4. **Commit with Conventional Commits:** `feat: add dwarf syllable table (#12)`. Types: `feat`, `fix`, `test`, `refactor`, `docs`, `chore`, `ci`. Small, focused commits.
 5. **Write or update tests alongside the code** (see Testing below). Run lint and all tests before opening a PR.
-6. **Open a pull request** using the PR template. Put `Closes #<issue>` in the body and fill in every section, including "AI involvement".
+6. **Open a pull request** using the PR template. Put `Closes #<issue>` in the body and fill in every section, including "AI involvement". The PR title must also be a Conventional Commit, because PRs are squash-merged and the title becomes the commit on `main`. The "PR title" CI check (`.github/workflows/pr-title.yml`) enforces this; editing the title re-runs it.
 7. **Never push to `main`, never merge your own PR, never force-push a shared branch.** Jameson reviews and merges.
 8. **One issue per PR.** If you find other problems, note them in the PR or draft a new issue; don't fix them in passing.
 
