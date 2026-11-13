@@ -41,6 +41,8 @@ npm run audit        # audit-ci dependency audit, allowlist in audit-ci.jsonc (a
 
 ## How work flows
 
+`main` is protected by a repository ruleset (see [docs/REPO_SETTINGS.md](docs/REPO_SETTINGS.md)). Direct pushes, force pushes and deleting `main` are all rejected, and a PR can only be squash-merged once the `Lint, test and build` and `Conventional Commit title` checks pass. If a push is rejected with `GH013: Repository rule violations`, push to your branch and open a PR. Never try to work around the rule. If you rename a required CI job, update the ruleset docs and JSON in the same PR.
+
 1. **Every change starts from a GitHub issue.** If there is no issue, stop and ask for one (or draft one for Jameson to approve).
 2. **Read the whole issue**, including acceptance criteria and comments. If anything is ambiguous, ask in an issue comment rather than guessing.
 3. **Branch from `main`** using `<type>/<issue-number>-<short-slug>`:
