@@ -23,7 +23,7 @@ jobs:
       # github-script v8 runs on Node 24, which imports .ts files directly.
       # The title is read from the event payload, never interpolated into the
       # script, so its contents can't inject code.
-      - uses: actions/github-script@v8
+      - uses: actions/github-script@v9
         with:
           script: |
             const { checkPrTitle, formatFailureMessage } = await import(
