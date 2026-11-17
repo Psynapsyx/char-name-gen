@@ -28,6 +28,12 @@ describe('checkPrTitle', () => {
     expect(checkPrTitle(title)).toEqual({ ok: true });
   });
 
+  // release-please (.github/workflows/release-please.yml) titles its Release
+  // PR like this. If the check rejected it, no release could be merged.
+  it('accepts the release-please Release PR title', () => {
+    expect(checkPrTitle('chore(main): release 0.1.0')).toEqual({ ok: true });
+  });
+
   it('accepts a breaking-change marker, with or without a scope', () => {
     expect(checkPrTitle('feat!: drop old name format')).toEqual({ ok: true });
     expect(checkPrTitle('feat(api)!: drop old name format')).toEqual({ ok: true });
