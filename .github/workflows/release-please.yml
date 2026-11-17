@@ -1,0 +1,51 @@
+name: Release Please
+
+# Keeps a "Release PR" open that bumps the version in package.json and
+# package-lock.json and updates CHANGELOG.md, based on the Conventional Commits
+# merged to main since the last release. Merging that PR tags the release
+# (v*) and publishes a GitHub Release. Nothing is released until a human
+# merges the Release PR.
+#
+# The Release PR is opened with a GitHub App token, not GITHUB_TOKEN: a PR
+# opened with GITHUB_TOKEN doesn't trigger other workflows, so CI and the PR
+# title check would never run on it and it could never be merged under the
+# ruleset on main. App setup: docs/REPO_SETTINGS.md#github-app-for-releases.
+#
+# Config: release-please-config.json and .release-please-manifest.json.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Everything is done with the App token, so GITHUB_TOKEN gets no permissions.
+permissions: {}
+
+# Two runs at once could both try to update the Release PR or create the same
+# release. Queue them instead of cancelling, so a release is never cut short.
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: Release Please
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Get a GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          # Ask only for what release-please needs, even if the App has more.
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Update the Release PR or publish a release
+        uses: googleapis/release-please-action@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
