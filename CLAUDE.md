@@ -52,6 +52,7 @@ npm run audit        # audit-ci dependency audit, allowlist in audit-ci.jsonc (a
 6. **Open a pull request** using the PR template. Put `Closes #<issue>` in the body and fill in every section, including "AI involvement". The PR title must also be a Conventional Commit, because PRs are squash-merged and the title becomes the commit on `main`. The "PR title" CI check (`.github/workflows/pr-title.yml`) enforces this; editing the title re-runs it.
 7. **Never push to `main`, never merge your own PR, never force-push a shared branch.** Jameson reviews and merges.
 8. **One issue per PR.** If you find other problems, note them in the PR or draft a new issue; don't fix them in passing.
+9. **Never bump versions or edit the changelog by hand.** release-please owns `version` in `package.json` and `package-lock.json`, `CHANGELOG.md` and `.release-please-manifest.json`, and updates them in its Release PR (see "Releases" in the README). Your PR title decides the next version, so pick its type carefully: `fix:` is a patch, `feat:` is a minor, and `!` marks a breaking change. Don't merge, edit or close the Release PR; Jameson releases by merging it. Change `release-please-config.json` only when an issue asks for it.
 
 **Shortcut:** in Claude Code, `/work-issue <number>` (defined in `.claude/commands/work-issue.md`) starts this flow for an issue. It reads the issue and proposes a plan, then waits for approval before branching and implementing.
 
