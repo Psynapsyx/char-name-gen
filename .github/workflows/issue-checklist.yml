@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # github-script v8 runs on Node 24, which imports .ts files directly.
       # The issue body is read from the event payload, never interpolated
