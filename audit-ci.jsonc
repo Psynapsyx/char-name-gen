@@ -2,19 +2,25 @@
   "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
   // Fail CI on moderate, high or critical advisories.
   "moderate": true,
-  // Each entry allows ONE advisory through ONE exact dependency path.
-  // The same advisory arriving via any other package still fails CI.
+  // Each entry allows ONE advisory through it. Any other advisory still fails CI.
   //
-  // GHSA-g3hv-75wg-m249 (minimatch ReDoS) via typescript-eslint.
-  // Reason: dev-only lint tooling; fixed upstream, expected in typescript-eslint 8.72.3.
-  // Removed by: https://github.com/Psynapsyx/char-name-gen/issues/24
+  // Entries use a "*" wildcard in the path instead of exact dependency paths.
+  // audit-ci reports different paths for the same lockfile from run to run and
+  // machine to machine (e.g. "fdir>picomatch" locally but
+  // "tinyglobby>fdir>picomatch>" in CI), so exact-path entries kept breaking.
+  // "*picomatch*" matches any path that reaches picomatch. Every entry must give
+  // a reason and link the issue that will remove it.
   "allowlist": [
-    // Paths exactly as audit-ci reports them after a clean `npm ci`. The
-    // type-utils path appears with and without a trailing ">" between runs.
-    "GHSA-g3hv-75wg-m249|@typescript-eslint/eslint-plugin>@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch",
-    "GHSA-g3hv-75wg-m249|@typescript-eslint/eslint-plugin>@typescript-eslint/type-utils>@typescript-eslint/typescript-estree>minimatch>",
-    "GHSA-g3hv-75wg-m249|@typescript-eslint/typescript-estree>minimatch>",
-    "GHSA-g3hv-75wg-m249|@typescript-eslint/utils>@typescript-eslint/typescript-estree>minimatch>",
-    "GHSA-g3hv-75wg-m249|typescript-eslint>@typescript-eslint/parser>@typescript-eslint/typescript-estree>minimatch",
+    // GHSA-g3hv-75wg-m249 (minimatch ReDoS) via typescript-eslint.
+    // Reason: dev-only lint tooling; fixed upstream, expected in typescript-eslint 8.72.3.
+    // Removed by: https://github.com/Psynapsyx/char-name-gen/issues/24
+    "GHSA-g3hv-75wg-m249|*minimatch*",
+
+    // GHSA-fc5q-39xc-vjpf (picomatch ReDoS) via vite, vitest and typescript-eslint.
+    // Reason: dev-only tooling that only matches this repo's own glob patterns,
+    // never user input, and none of it ships in the built site. No fixed
+    // version exists yet (<= 4.0.7 is affected).
+    // Removed by: https://github.com/Psynapsyx/char-name-gen/issues/55
+    "GHSA-fc5q-39xc-vjpf|*picomatch*",
   ],
 }
