@@ -4,7 +4,7 @@ Some of the rules this project relies on live in GitHub's repository settings, n
 made from this one as a template (#31) does **not** copy them, so they're written down here to be
 repeated by hand.
 
-Current as of #33. If you change a setting on GitHub, update this file in the same PR.
+Current as of #43. If you change a setting on GitHub, update this file in the same PR.
 
 ## Ruleset: Protect main
 
@@ -80,6 +80,59 @@ A required check matches on the job's `name:`, not the workflow file name:
 
 If you rename one of these jobs, update the ruleset in the same PR. Otherwise the old check is
 "expected" forever and no PR can merge.
+
+## GitHub App for releases
+
+[`.github/workflows/release-please.yml`](../.github/workflows/release-please.yml) opens and updates
+the Release PR (see "Releases" in the README) with a token from a GitHub App, not the default
+`GITHUB_TOKEN`. GitHub doesn't trigger other workflows from a PR opened with `GITHUB_TOKEN`, so CI and
+the PR title check would never run on the Release PR, and the ruleset would block merging it.
+
+An App token gets around this, and unlike a personal access token it isn't tied to one person's
+account and doesn't expire. Running CI by hand on the Release PR doesn't work either: the bot rewrites
+the release branch after every merge to `main`, so a manual run soon goes stale.
+
+### Create the App
+
+1. **Your profile picture > Settings > Developer settings > GitHub Apps > New GitHub App.**
+2. Fill in the form:
+
+   | Setting                   | Value                                                           |
+   | ------------------------- | --------------------------------------------------------------- |
+   | GitHub App name           | Any unique name, e.g. `char-name-gen-releases`                  |
+   | Homepage URL              | The repo URL                                                    |
+   | Webhook > Active          | **Off** (the App is only used to make tokens)                   |
+   | Repository permissions    | **Contents: Read and write**, **Pull requests: Read and write** |
+   | Everything else           | No access (Metadata: Read-only is added automatically)          |
+   | Where can it be installed | **Only on this account**                                        |
+
+3. Click **Create GitHub App**. On the App's **General** page, copy the **Client ID**, then under
+   **Private keys** click **Generate a private key**. A `.pem` file downloads.
+4. **Install App** (left sidebar) > **Install** > **Only select repositories** > pick this repo only.
+
+### Give the workflow the App's details
+
+In the repo, under **Settings > Secrets and variables > Actions**:
+
+| Kind     | Name                      | Value                                                        |
+| -------- | ------------------------- | ------------------------------------------------------------ |
+| Variable | `RELEASE_APP_CLIENT_ID`   | The App's Client ID (starts with `Iv`)                       |
+| Secret   | `RELEASE_APP_PRIVATE_KEY` | The whole contents of the `.pem` file, header lines included |
+
+Or with the GitHub CLI, from the repo root:
+
+```sh
+gh variable set RELEASE_APP_CLIENT_ID --body "<client id>"
+gh secret set RELEASE_APP_PRIVATE_KEY < path/to/private-key.pem
+```
+
+Then delete the downloaded `.pem` file. If the key leaks, delete it on the App's page and generate a
+new one. Until both values are set, the Release Please workflow fails on every push to `main`. Nothing
+else is affected.
+
+To check the setup, run **Actions > Release Please > Run workflow**. It should pass. If there's a
+`feat:` or `fix:` commit since the last release, it opens or updates the Release PR, and CI and the
+PR title check should start on that PR on their own.
 
 ## Other settings
 
