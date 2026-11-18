@@ -8,8 +8,22 @@ body {
   margin: 0;
 }
 
-main {
+/* main and footer share one centred column, so their text lines up. */
+main,
+footer {
   max-width: 40rem;
   margin: 0 auto;
   padding: 2rem 1rem;
+}
+
+footer {
+  /* Less vertical space than main. */
+  padding-block: 1rem;
+  font-size: 0.875rem;
+  /* Mixing the page's own text colour keeps contrast in light and dark mode. */
+  color: color-mix(in srgb, CanvasText 70%, Canvas);
+}
+
+footer p {
+  margin: 0;
 }
