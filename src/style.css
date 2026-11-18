@@ -8,6 +8,7 @@ body {
   margin: 0;
 }
 
+/* main and footer share one centred column, so their text lines up. */
 main,
 footer {
   max-width: 40rem;
@@ -16,6 +17,7 @@ footer {
 }
 
 footer {
+  /* Less vertical space than main. */
   padding-block: 1rem;
   font-size: 0.875rem;
   /* Mixing the page's own text colour keeps contrast in light and dark mode. */
