@@ -2,3 +2,4 @@ dist
 package-lock.json
 # Written by release-please (see release-please-config.json), not by hand.
 CHANGELOG.md
+.release-please-manifest.json
