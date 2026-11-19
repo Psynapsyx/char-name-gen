@@ -4,7 +4,7 @@ Some of the rules this project relies on live in GitHub's repository settings, n
 made from this one as a template (#31) does **not** copy them, so they're written down here to be
 repeated by hand.
 
-Current as of #43. If you change a setting on GitHub, update this file in the same PR.
+Current as of #62. If you change a setting on GitHub, update this file in the same PR.
 
 ## Ruleset: Protect main
 
@@ -138,13 +138,20 @@ PR title check should start on that PR on their own.
 
 **Settings > General > Pull Requests**
 
-| Setting                            | Value                                                   |
-| ---------------------------------- | ------------------------------------------------------- |
-| Allow merge commits                | Off                                                     |
-| Allow squash merging               | On, with **Default commit message: Pull request title** |
-| Allow rebase merging               | Off                                                     |
-| Automatically delete head branches | On                                                      |
-| Allow auto-merge                   | Off                                                     |
+| Setting                                       | Value                                                   |
+| --------------------------------------------- | ------------------------------------------------------- |
+| Allow merge commits                           | Off                                                     |
+| Allow squash merging                          | On, with **Default commit message: Pull request title** |
+| Allow rebase merging                          | Off                                                     |
+| Automatically delete head branches            | On                                                      |
+| Allow auto-merge                              | Off                                                     |
+| Always suggest updating pull request branches | On                                                      |
+
+**Why "Always suggest updating" is on:** by default GitHub only shows a PR's **Update branch**
+button when branches must be up to date before merging. The `Protect main` ruleset turns that off
+(see "Why these values" above), so without this setting the button is hidden. **Update branch** is
+how a stale PR gets the latest `main`. That includes the Release PR, which release-please only
+rebuilds when a merge changes the changelog (a `ci:` or `docs:` commit doesn't).
 
 **Settings > Actions > General > Workflow permissions**
 
